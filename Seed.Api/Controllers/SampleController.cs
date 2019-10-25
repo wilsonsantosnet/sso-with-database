@@ -29,6 +29,7 @@ namespace Seed.Api.Controllers
 			this._env = env;
         }
 
+
 		[Authorize(Policy = "CanReadAll")]
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery]SampleFilter filters)

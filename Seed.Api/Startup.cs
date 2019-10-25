@@ -19,6 +19,7 @@ using Microsoft.Extensions.PlatformAbstractions;
 using System.IO;
 using System.Linq;
 using AutoMapper;
+using Common.Api;
 
 namespace Seed.Api
 {
@@ -89,7 +90,9 @@ namespace Seed.Api
             var sp = services.BuildServiceProvider();
             var configuration = sp.GetService<IOptions<ConfigSettingsBase>>();
             Cors.Enable(services, configuration.Value.ClientAuthorityEndPoint.ToArray());
-			services.AddAutoMapper(AutoMapperConfigSeed.RegisterMappings());
+            services.AddTransient<ICorsPolicyAccessor, CorsPolicyAccessor>();
+
+            services.AddAutoMapper(AutoMapperConfigSeed.RegisterMappings());
 
             // Add application services.
             ConfigContainerSeed.Config(services);			
@@ -164,7 +167,6 @@ namespace Seed.Api
         	
 			app.UseAuthentication();
             app.AddTokenMiddlewareCustom();
-            app.UseMvc();
 			//Ativando middlewares para uso do Swagger
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -175,6 +177,8 @@ namespace Seed.Api
 
             });
 	    	app.UseCors("AllowStackOrigin");
+            //app.UseMiddleware<CustomCorsMiddleware>();
+            app.UseMvc();
         }
 
     }

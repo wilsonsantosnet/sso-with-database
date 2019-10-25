@@ -1,4 +1,5 @@
-﻿using Common.API;
+﻿using Common.Api;
+using Common.API;
 using Common.Domain.Base;
 using Common.Domain.Model;
 using IdentityServer4.EntityFramework.DbContexts;
@@ -100,7 +101,7 @@ namespace Sso.Server.Api
 
             loggerFactory.AddFile(Configuration.GetSection("Logging"));
 
-            app.UseCors("AllowAnyOrigin");
+            app.UseCors("AllowStackOrigin");
             app.UseIdentityServer();
             //app.UseGoogleAuthentication(new GoogleOptions
             //{

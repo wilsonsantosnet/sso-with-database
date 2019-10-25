@@ -18,19 +18,19 @@ namespace Common.API
                     .AllowAnyMethod());
             });
 
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("AllowStackOrigin",
-            //        builder => builder
-            //        .WithOrigins(origins)
-            //        .AllowAnyHeader()
-            //        .AllowAnyMethod());
-            //});
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowStackOrigin",
+                    builder => builder
+                    .WithOrigins(origins)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            });
 
             services.Configure<MvcOptions>(options =>
             {
                 options.Filters.Add(new CorsAuthorizationFilterFactory("AllowAnyOrigin"));
-                //options.Filters.Add(new CorsAuthorizationFilterFactory("AllowStackOrigin"));
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowStackOrigin"));
             });
 
         }
